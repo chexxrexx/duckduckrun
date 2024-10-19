@@ -22,6 +22,8 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.running = False
 
+            self.display_surface.fill((0, 0, 0))
+
             self.all_sprites.update(dt)
 
             self.all_sprites.draw(self.display_surface)
