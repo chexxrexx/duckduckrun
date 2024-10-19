@@ -1,7 +1,7 @@
 from settings import *
 from player import Player
 
-class CollisonSprite(pygame.sprite.Sprite):
+class CollisionSprite(pygame.sprite.Sprite):
     def __init__(self, pos, size, groups):
         super().__init__(groups)
         self.image.fill('blue') # Fills the image with a blue colour
