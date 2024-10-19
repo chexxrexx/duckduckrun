@@ -20,21 +20,23 @@ class Player(pygame.sprite.Sprite):
 
         self.direction = pygame.Vector2()
         self.speed=500
+        self.collision_sprites = collision_sprites
 
     def input(self):
         keys=pygame.key.get_pressed()
         self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
         self.direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
-        
-    #movement 
-    self.direction = pygame.Vector2()
-    self.speed = 500
-    self.collision_sprites = collision_sprites
-
-    def input(self): 
     
     def move(self,dt):
-        self.rect.center+=self.direction*self.speed*dt
+        self.rect.x += self.direction.x*self.speed*dt #first we move player on the horizontal axis either left or right
+        self.collision('horizontal') #then we check for a collision, see if the player is to the left or right of the obsticle, but 1st, we need to get all of the obsticles (done using for loop below)
+        self.rect.y += self.direction.y*self.speed*dt
+        self.collision('vertical')
+        
+    def collision(self, diretion):
+        for sprite in self.collision_sprites:
+            if sprite.rect.colliderect(self.rect):
+                print('overlap')
 
     def update(self,dt):
         self.input()
