@@ -1,10 +1,12 @@
 from settings import *
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups):
+    def __init__(self, pos, groups, collision_sprites):
         super().__init__(groups)
         # Load the image
         self.image = pygame.image.load(join('images', 'front.png')).convert_alpha()
+        self.rect = self.image.get_frect(center = pos)
+        self.hitbox_rect = self.rect.inflate(-60,-30)
 
         # Get the original size of the image
         original_size = self.image.get_size()
@@ -23,7 +25,14 @@ class Player(pygame.sprite.Sprite):
         keys=pygame.key.get_pressed()
         self.direction.x = int(keys[pygame.K_RIGHT]) - int(keys[pygame.K_LEFT])
         self.direction.y = int(keys[pygame.K_DOWN]) - int(keys[pygame.K_UP])
+        
+    #movement 
+    self.direction = pygame.Vector2()
+    self.speed = 500
+    self.collision_sprites = collision_sprites
 
+    def input(self): 
+    
     def move(self,dt):
         self.rect.center+=self.direction*self.speed*dt
 
