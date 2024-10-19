@@ -96,7 +96,15 @@ class Enemy(pygame.sprite.Sprite):
         # get direction
         player_pos = pygame.Vector2(self.player.rect.center)
         enemy_pos = pygame.Vector2(self.rect.center)
-        self.direction = (player_pos - enemy_pos).normalize()
+        self.direction = (player_pos - enemy_pos)
+
+        if self.direction.length() == 0:
+            # If the enemy reaches the player, trigger game over or end game
+            self.player.game_over()
+
+        else:
+            # Only normalize if the vector is non-zero
+            self.direction = self.direction.normalize()
 
         # update the rect position + collision
         self.hitbox_rect.x += self.direction.x * self.speed * dt

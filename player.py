@@ -14,6 +14,11 @@ class Player(pygame.sprite.Sprite):
         self.direction = pygame.Vector2()
         self.speed = 500
         self.collision_sprites = collision_sprites
+        self.game_active=True
+
+    def game_over(self):
+        print("Game Over!")
+        self.game_active = False
 
     def load_images(self):
         self.frames = {'left': [], 'right': [], 'up': [], 'down': []}

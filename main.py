@@ -12,9 +12,10 @@ class Game:
         # setup
         pygame.init()
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-        pygame.display.set_caption('Survivor')
+        pygame.display.set_caption('duck duck run')
         self.clock = pygame.time.Clock()
         self.running = True
+        self.font = pygame.font.Font(None, 74)
 
         # groups
         self.all_sprites = AllSprites()
@@ -43,6 +44,37 @@ class Game:
         # setup
         self.load_images()
         self.setup()
+
+    def game_over_screen(self):
+        # Game Over screen
+        game_over_text = self.font.render("GAME OVER", True, (255, 0, 0))
+        restart_text = self.font.render("Press R to Restart or Q to Quit", True, (255, 255, 255))
+
+        # Centering text
+        game_over_rect = game_over_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 - 50))
+        restart_rect = restart_text.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2 + 50))
+
+        # Display the Game Over text
+        self.display_surface.fill('black')
+        self.display_surface.blit(game_over_text, game_over_rect)
+        self.display_surface.blit(restart_text, restart_rect)
+        pygame.display.update()
+
+        # Wait for input
+        game_over = True
+        while game_over:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()  # Quits the game
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_r:  # Restart the game
+                        self.__init__()  # Re-initialize the game (soft restart)
+                        game_over = False
+                    if event.key == pygame.K_q:  # Quit the game
+                        pygame.quit()
+                        exit()
+            self.clock.tick(60)
 
     def load_images(self):
         self.bullet_surf = pygame.image.load(join('images', 'gun', 'bullet.png')).convert_alpha()
@@ -107,6 +139,10 @@ class Game:
 
     def run(self):
         while self.running:
+            if not self.player.game_active:
+                self.game_over_screen()
+                return  # End the current game loop when player is caught
+
             # dt
             dt = self.clock.tick() / 1000
 
@@ -123,7 +159,6 @@ class Game:
             self.input()
             self.all_sprites.update(dt)
             self.bullet_collision()
-            # self.player_collision()
 
             # draw
             self.display_surface.fill('black')
