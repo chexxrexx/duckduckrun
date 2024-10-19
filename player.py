@@ -6,7 +6,7 @@ class Player(pygame.sprite.Sprite):
         # Load the image
         self.image = pygame.image.load(join('images', 'front.png')).convert_alpha()
         self.rect = self.image.get_frect(center = pos)
-        self.hitbox_rect = self.rect.inflate(-60,-30)
+        self.hitbox_rect = self.rect.inflate(-60,-90) # this is the overlap between player and objects
 
         # Get the original size of the image
         original_size = self.image.get_size()
