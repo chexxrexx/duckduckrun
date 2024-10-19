@@ -21,7 +21,7 @@ class Gun(pygame.sprite.Sprite):
     def __init__(self, player, groups):
         # player connection
         self.player = player
-        self.distance = 140
+        self.distance = 80
         self.player_direction = pygame.Vector2(0, 1)
 
         # sprite setup
