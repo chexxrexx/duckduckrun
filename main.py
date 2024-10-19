@@ -42,11 +42,11 @@ class Game:
                  self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites)
 
         # unsure of neccessity of this
-        self.player = Player((400,300), self.all_sprites)
+        self.player = Player((400,300), self.all_sprites, self.collision_sprites)
         for i in range(6):
             x, y = randint(0, WINDOW_WIDTH), randint(0, WINDOW_HEIGHT)
             w, h = randint(60,100), randint(50,100)
-            CollisionSize((x,y), (w,h), (self.all_sprites, self.collision_sprites))
+            CollisionSprite((x,y), (w,h), (self.all_sprites, self.collision_sprites))
             
     def run(self):
         while self.running:
