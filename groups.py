@@ -11,8 +11,8 @@ def draw(self, target_pos):
     self.offset.x = -(target_pos [0] - WINDOW_WIDTH / 2)
     self.offset.y = -(target_pos[1] - WINDOW_HEIGHT / 2)
 
-    ground_sprites = [sprites for sprite in self if hasattr(sprite, 'ground')]
-    object_sprites = [sprites for sprite in self if not hasattr(sprite, 'ground')]
+    ground_sprites = [sprite for sprite in self if hasattr(sprite, 'ground')]
+    object_sprites = [sprite for sprite in self if not hasattr(sprite, 'ground')]
 
     for layer in [ground_sprites, object_sprites]  # the order is important as it shows the layering order
         for sprite in sorted(layer, key = lambda sprite: sprite.rect.centery):
